@@ -25,18 +25,29 @@ const Customer = mongoose.model('Customer', new mongoose.Schema({
 
 
 router.get('/', async (req, res) => {
-  const customers = await Customer.find().sort('name');
+  const customers = await Customer.find();
   res.send(customers);
 });
+
 
 router.post('/', async (req, res) => {
   const { error } = validateCustomer(req.body)
   if(error) return res.status(400).send(error.details[0].message)
 
   let customer = await new Customer({name: req.body.name, isGold: req.body.isGold, phone: req.body.phone})
+  genre = customer.save()
 
   res.send(customer)
 })
+
+router.get('/:id', async (req, res) => {
+  const customer = await Customer.findById(req.params.id)
+
+  if (!customer) return res.status(404).send('The customer with the given ID was not found.');
+
+  res.send(customer)
+})
+
 
 function validateCustomer(customer) {
   const schema = {

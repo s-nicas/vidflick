@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 
-const Movie = mongose.model('Movie', new mongoose.Schema({
+const Movie = mongoose.model('Movie', new mongoose.Schema({
   isGold: {
     type: Boolean,
     required: true
@@ -22,3 +22,11 @@ const Movie = mongose.model('Movie', new mongoose.Schema({
     maxlength:18
   }
 }))
+
+
+router.get('/', async (req, res) => {
+  const movies = await Movie.find().sort('name');
+  res.send(movie);
+});
+
+module.exports = router;

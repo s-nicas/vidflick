@@ -1,9 +1,11 @@
-const express = require('express')
-const genres = require('./routes/genres')
-const movies = require('./routes/customers')
-const home = require('./routes/home')
 const mongoose = require('mongoose')
+const express = require('express')
 const app = express();
+
+const genres = require('./routes/genres')
+const customers = require('./routes/customers')
+const home = require('./routes/home')
+
 
 
 mongoose.connect('mongodb://localhost/vidly', { useNewUrlParser: true })
@@ -14,7 +16,7 @@ mongoose.connect('mongodb://localhost/vidly', { useNewUrlParser: true })
 // will parse the request to json - and give us access to req.body
 app.use(express.json())
 app.use('/api/genres', genres)
-app.use('/api/movies', movies)
+app.use('/api/customers', customers)
 app.use('/', home)
 
 

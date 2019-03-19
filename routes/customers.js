@@ -38,18 +38,6 @@ router.post('/', async (req, res) => {
   res.send(customer)
 })
 
-
-router.post('/', async (req, res) => {
-  const { error } = validateGenre(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-
-  let genre = new Genre({ name: req.body.name });
-  genre = await genre.save();
-
-  res.send(genre);
-});
-
-
 function validateCustomer(customer) {
   const schema = {
     name: Joi.string().min(2).required(),

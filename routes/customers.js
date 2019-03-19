@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 
-const Movie = mongoose.model('Movie', new mongoose.Schema({
+const Customer = mongoose.model('Customer', new mongoose.Schema({
   isGold: {
     type: Boolean,
     required: true
@@ -25,8 +25,16 @@ const Movie = mongoose.model('Movie', new mongoose.Schema({
 
 
 router.get('/', async (req, res) => {
-  const movies = await Movie.find().sort('name');
-  res.send(movie);
+  const customers = await Customer.find().sort('name');
+  res.send(customers);
 });
+
+
+
+
+
+
+
+
 
 module.exports = router;

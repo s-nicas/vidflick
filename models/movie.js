@@ -2,7 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const { genreSchema } = require('./genre')
 
-const Movie = mongoose.model('Movie', new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
   // representation of our modal - what we will store in MongoDB
     title: {
       type: String,
@@ -29,7 +29,8 @@ const Movie = mongoose.model('Movie', new mongoose.Schema({
       max: 200
     }
   })
-)
+
+const Movie = mongoose.model('Movie', movieSchema)
 
 // what the clien sends us - input to API
 
@@ -46,3 +47,4 @@ function validateMovie(movie) {
 
 exports.Movie = Movie
 exports.validate = validateMovie
+exports.movieSchema = movieSchema

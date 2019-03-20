@@ -15,5 +15,15 @@ const rentalSchema = ({
   }
 })
 
-
 const Rental = mongoose.model('Rental', rentalSchema)
+
+function validateRental(rental){
+  const schema = {
+    customerId: Joi.string().required(),
+    movieId: Joi.String().required()
+  }
+  return Joi.validate(rental, schema)
+}
+
+exports.Rental = Rental
+exports.validate = validateRental

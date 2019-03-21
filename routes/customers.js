@@ -14,8 +14,8 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body)
   if(error) return res.status(400).send(error.details[0].message)
 
-  let customer = await new Customer({name: req.body.name, isGold: req.body.isGold, phone: req.body.phone})
-  genre = customer.save()
+  const customer = await new Customer({name: req.body.name, isGold: req.body.isGold, phone: req.body.phone})
+  await  customer.save()
 
   res.send(customer)
 })

@@ -6,6 +6,14 @@ const _ = require('lodash')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const auth = require('../middleware/auth')
+
+
+router.get('/me', auth, async (req, res) => {
+  // get req.user from auth middleware - web token client has to pass it in otherwise won't reach this point
+ const user = await User.findById(req.user._id).select('-password')
+ res.send(user)
+})
 
 router.post('/', async (req, res) => {
   const { error } = validate(req.body)
@@ -26,5 +34,7 @@ router.post('/', async (req, res) => {
 
   res.send(_.pick(user, ['_id','name', 'email']))
 })
+
+// loggout route not needed - not storing token on server. Implement logout on client not on server. 
 
 module.exports = router

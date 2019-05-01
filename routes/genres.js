@@ -4,14 +4,18 @@ const router = express.Router();
 const { Genre, validate } = require('../models/genre')
 const auth = require('../middleware/auth')
 const admin = require('../middleware/admin')
+const asyncMiddleware = require('../middleware/async')
+require('express-async-errors')
+const winston = require('winston')
+// winston has a transport with a storage for logs
 
-router.get('/', async (req, res) => {
+winston.add(winston.transport.File, { filename: 'logfile.log'})
+router.get('/', asyncMiddleware(async (req, res) => {
   const genres = await Genre.find().sort('name');
   res.send(genres);
-});
+}));
 
 router.post('/', auth, async (req, res) => {
-
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
